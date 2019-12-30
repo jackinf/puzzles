@@ -1,5 +1,5 @@
 test_case_1 = "abacdaefdjij"
-test_case_2 = "abacdefgadby"
+test_case_2 = "abacdfgdy"
 
 dict = {}
 for i in range(len(test_case_2)):
