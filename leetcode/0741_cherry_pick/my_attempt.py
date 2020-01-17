@@ -1,18 +1,20 @@
-from copy import deepcopy
 from typing import List, Tuple
+Path = List[Tuple[int, int]]
 
 
 class Solution:
     def cherryPickup(self, grid: List[List[int]]):
-        visited = [[False for _ in range(len(grid[0]))] for _ in range(len(grid))]
-        visited[0][0] = True
-        path = [(0, 0)]
-        self.solve(grid, 0, 0, visited, path)
+        target = (len(grid[0])-1, len(grid)-1)
+        results1 = []
+        self.solve(grid, (0, 0), target, [(0, 0)], 0, results1)
 
-    def solve(self, grid: List[List[int]], x: int, y: int, visited: List[List[int]], path: List[Tuple[int, int]]):
+    def solve(self, grid: List[List[int]], current: Tuple[int, int], target: Tuple[int, int], path: Path, score: int, results: List[Path]):
+        x, y = current
+        target_x, target_y = target
         # print(f'[{x},{y}], path: {path}')
-        if x == len(grid[0])-1 and y == len(grid)-1:
-            print('path', path)
+        if x == target_x and y == target_y:
+            results.append(path)
+            print(f'path: {path}, score: {score}')
             return
 
         directions = ((-1, 0), (1, 0), (0, -1), (0, 1))
@@ -20,16 +22,14 @@ class Solution:
             new_x, new_y = x + dir_x, y + dir_y
             # if x == 0 and y == 0 and new_x == 0 and new_y == 1:
             #     print(f'visited: {visited}')
-            if self.is_visitable(grid, new_x, new_y, visited):
+            if self.is_visitable(grid, new_x, new_y, path):
                 # print(f'({x},{y}), trying new_x: {new_x}, new_y: {new_y}')
-                visited_copy = deepcopy(visited)
-                visited_copy[new_y][new_x] = True
-                self.solve(grid, new_x, new_y, visited_copy[:], path+[(new_x, new_y)])
+                self.solve(grid, (new_x, new_y), target, path+[(new_x, new_y)], score+grid[y][x], results)
 
     def get_visited_index(self, x: int, y: int, row_len: int):
         return y * row_len + x
 
-    def is_visitable(self, grid: List[List[int]], x: int, y: int, visited: List[List[int]]):
+    def is_visitable(self, grid: List[List[int]], x: int, y: int, path: List[Tuple[int, int]]):
         if 0 > x or x >= len(grid[0]):
             return False
         if 0 > y or y >= len(grid):
@@ -37,7 +37,7 @@ class Solution:
         if grid[y][x] == -1:
             # print(f'Can\'t access [{x},{y}]')
             return False
-        if visited[y][x]:
+        if (x, y) in path:
             # print(f'Already visited [{x},{y}]')
             return False
         return True
