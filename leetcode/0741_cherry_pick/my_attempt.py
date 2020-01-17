@@ -12,17 +12,40 @@ class Solution:
         results1 = []
         self.solve(grid, start, target, [(0, 0, grid[0][0])], results1)
 
-        print(f'from {target} to {start}')
-        results2 = []
-        self.solve(grid, target, start, [(target_x, target_y, grid[target_y][target_x])], results2)
+        # print(f'from {target} to {start}')
+        # results2 = []
+        # self.solve(grid, target, start, [(target_x, target_y, grid[target_y][target_x])], results2)
 
-        print(f'results1')
-        for result1_item in results1:
-            print(result1_item)
+        # remove 0's
+        for i in range(len(results1)):
+            results1[i] = sorted([x for x in results1[i] if x[2] == 1])
+        # for i in range(len(results2)):
+        #     results2[i] = sorted([x for x in results2[i] if x[2] == 1])
+        # results1 = [x for x in results1 if x[2] == 1]
+        # results2 = [x for x in results2 if x[2] == 1]
 
-        print(f'results2')
-        for results2_item in results2:
-            print(results2_item)
+        # print(f'results1')
+        # for result1_item in results1:
+        #     print(result1_item)
+        # print(f'results2')
+        # for results2_item in results2:
+        #     print(results2_item)
+
+        combs = []
+        res = 0
+        for i in range(len(results1)):
+            results1_item1 = results1[i]
+            for j in range(len(results1)):
+                results1_item2 = results1[j]
+                if i != j:
+                    res = max(sum([x[2] for x in set(results1_item1 + results1_item2)]), res)
+                    # combs.append(results1_item1 + results1_item2)
+
+        # print('combs')
+        # for comb_item in combs:
+        #     print(set(comb_item))
+
+        print(f'res: {res}')
 
     def solve(self, grid: List[List[int]], current: Tuple[int, int], target: Tuple[int, int], path: Path, results: List[Path]):
         x, y = current
