@@ -8,11 +8,15 @@ class Solution:
         target_x, target_y = len(grid[0])-1, len(grid)-1
         target = (target_x, target_y)
 
+        if start == target:
+            return grid[0][0]
+
         print(f'from {start} to {target}')
         results1 = []
         self.solve(grid, start, target, [(0, 0, grid[0][0])], results1)
 
         # remove 0's
+        print('here')
         for i in range(len(results1)):
             results1[i] = sorted([x for x in results1[i] if x[2] == 1])
 
@@ -29,6 +33,7 @@ class Solution:
         x, y = current
         target_x, target_y = target
         if x == target_x and y == target_y:
+            print(f'path: {path}')
             results.append(path)
             return
 
@@ -55,8 +60,7 @@ class Solution:
 
 if __name__ == "__main__":
     s = Solution()
-    test_case_1 = ([[0, 1, -1],
-            [1, 0, -1],
-            [1, 1, 1]], 5)
+    test_case_1 = [[0,1,-1],[1,0,-1],[1,1,1]]
+    test_case_2 = [[1,1,1,1,0,0,0],[0,0,0,1,0,0,0],[0,0,0,1,0,0,1],[1,0,0,1,0,0,0],[0,0,0,1,0,0,0],[0,0,0,1,0,0,0],[0,0,0,1,1,1,1]]
 
-    s.cherryPickup(test_case_1[0])
+    s.cherryPickup(test_case_2)
