@@ -1,9 +1,4 @@
-class Node:
-    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
-        self.val = val
-        self.left = left
-        self.right = right
-        self.next = next
+from leetcode.learning.populating_next_right_pointers_in_each_node.node import Node
 
 
 class Solution:
@@ -24,5 +19,3 @@ class Solution:
             for i in range(1, len(level)):
                 level[i - 1].next = level[i]
         return root
-
-
