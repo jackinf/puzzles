@@ -1,8 +1,5 @@
-from typing import List
-
-
 class Solution:
-    def solve(self, s: str, words: List[str]):
+    def solve(self, s: str, words):
         aaa = {"i": 1, "j": 1, "a": 2, "b": 2, "c": 2, "d": 3, "e": 3, "f": 3,
                "g": 4, "h": 4, "k": 5, "l": 5, "m": 6, "n": 6, "p": 7, "r": 7, "s": 7, "t": 8, "u": 8, "v": 8,
                "w": 9, "x": 9, "y": 9, "o": 0, "q": 0, "z": 0}
@@ -20,7 +17,7 @@ class Solution:
         else:
             return "No solution."
 
-    def dfs(self, s: str, pointer: int, ans: List[str]):
+    def dfs(self, s: str, pointer: int, ans):
         if len(s) == pointer:
             return True
         if self.scanned[pointer]:
@@ -35,14 +32,33 @@ class Solution:
         return False
 
 
-if __name__ == "__main__":
-    s = Solution()
-    words = [
-        "it",
-        "your",
-        "reality",
-        "real",
-        "our",
-    ]
-    print(s.solve("7325189087", words))
-    print(s.solve("4294967296", words))
+while True:
+    sol = Solution()
+    s = input()
+    if s == "-1":
+        break
+    words = []
+    how_many = int(input())
+    for i in range(how_many):
+        words.append(input())
+    print(sol.solve(s, words))
+
+
+# input:
+"""
+7325189087
+5
+it
+your
+reality
+real
+our
+4294967296
+5
+it
+your
+reality
+real
+our
+-1
+"""
