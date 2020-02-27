@@ -35,16 +35,20 @@ class Solution:
         return False
 
 
-while True:
-    sol = Solution()
-    s = input()
-    if s == "-1":
-        sys.exit()
-    words = []
-    how_many = int(input())
-    for i in range(how_many):
-        words.append(input())
-    print(sol.solve(s, words))
+
+
+
+
+# while True:
+#     sol = Solution()
+#     s = input()
+#     if s == "-1":
+#         sys.exit()
+#     words = []
+#     how_many = int(input())
+#     for i in range(how_many):
+#         words.append(input())
+#     print(sol.solve(s, words))
 
 
 # input:
