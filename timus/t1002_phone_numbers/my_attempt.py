@@ -1,3 +1,6 @@
+import sys
+
+
 class Solution:
     def solve(self, s: str, words):
         aaa = {"i": 1, "j": 1, "a": 2, "b": 2, "c": 2, "d": 3, "e": 3, "f": 3,
@@ -36,7 +39,7 @@ while True:
     sol = Solution()
     s = input()
     if s == "-1":
-        break
+        sys.exit()
     words = []
     how_many = int(input())
     for i in range(how_many):
