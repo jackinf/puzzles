@@ -2,9 +2,6 @@ from typing import List
 
 
 class Solution:
-    """
-    Accepted, but slow.
-    """
     def exist(self, board: List[List[str]], word: str) -> bool:
         width = len(board[0])
         height = len(board)
@@ -20,18 +17,19 @@ class Solution:
                 return False
 
             # skip seen cell; mark cell as seen
-            if (i, j) in dp:
+            if 10000000 * i + j in dp:
                 return False
-            dp.append((i, j))
 
             # check if the last letter
             if p == N:
+                dp.add(10000000 * i + j)
                 return True
 
             # check neighbouring cells
             dirs = [(-1, 0), (1, 0), (0, 1), (0, -1)]
             for dirx, diry in dirs:
-                if find(i + dirx, j + diry, p + 1, dp[:]):
+                if find(i + dirx, j + diry, p + 1, dp):
+                    dp.add(10000000 * i + j)
                     return True
 
             return False
@@ -39,7 +37,10 @@ class Solution:
         # scan each cell
         for i in range(height):
             for j in range(width):
-                if find(i, j, 0, []):
+                dp = set()
+                if find(i, j, 0, dp):
+                    # if len(dp) == len(word):
+                    print(dp)
                     return True
 
         return False
@@ -47,11 +48,14 @@ class Solution:
 
 if __name__ == "__main__":
     s = Solution()
-    # print(s.exist([["a","a"]], "aaa"))
-    # print(s.exist([["a","b"],["c","d"]], "cdba"))
-    # print(s.exist([["A","B","C","E"],
-    #                ["S","F","E","S"],
-    #                ["A","D","E","E"]], "ABCESEEEFS"))
+    print(s.exist([["a","a"]], "aaa"), False)
+    print(s.exist([["a","b"],["c","d"]], "cdba"), True)
+    print(s.exist([["A","B","C","E"],
+                   ["S","F","E","S"],
+                   ["A","D","E","E"]], "ABCESEEEFS"), True)
     print(s.exist([["A","B","C","E"],
                    ["S","F","C","S"],
-                   ["A","D","E","E"]], "ABCB"))
+                   ["A","D","E","E"]], "ABCB"), False)
+    print(s.exist([["A","B","C","E"],
+                   ["S","F","C","S"],
+                   ["A","D","E","E"]], "ABCCED"), True)
